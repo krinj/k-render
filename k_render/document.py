@@ -20,6 +20,9 @@ __email__ = "juangbhanich.k@gmail.com"
 
 
 class Document:
+
+    PAGE_CAP_SECTION: Section = Section()
+
     def __init__(self):
         self.sections: List[Section] = []
         self.fixed_width: int = 1240
@@ -32,6 +35,9 @@ class Document:
     def add(self, section: Section):
         self.sections.append(section)
 
+    def add_page_cap(self):
+        self.sections.append(self.PAGE_CAP_SECTION)
+
     def render(self, tag="image"):
         """ Join the sections together and produce an output. """
         section_width = self.fixed_width - self.page_padding * 2
@@ -41,6 +47,14 @@ class Document:
         section_list = []
 
         for i, s in enumerate(self.sections):
+
+            # If section is page-break, then ship-off previous section if it is populated else ignore.
+            if s == self.PAGE_CAP_SECTION:
+                if len(section_list) > 0:
+                    page_sections.append(section_list)
+                    section_list = []
+                continue
+
             section_image = s.render(tag, section_width, i)
             next_height = sum([image.shape[0] for image in section_list]) + section_image.shape[0]
 

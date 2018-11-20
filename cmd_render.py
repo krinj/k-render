@@ -12,6 +12,7 @@ from k_render.dict_section import DictSection
 from k_render.document import Document
 from k_render.gallery_section import GallerySection
 from k_render.heading_section import HeadingSection
+from k_render.stat_card_section import StatCardSection
 
 __author__ = "Jakrin Juangbhanich"
 __copyright__ = "Copyright 2018, GenVis Pty Ltd."
@@ -41,13 +42,20 @@ if __name__ == "__main__":
         "Stat7": 1445,
     }
 
+    dict3 = {
+        "Faces": 9,
+        "Body": 12,
+        "Cars": 0,
+        "Heat": 0
+    }
+
     section = HeadingSection("WTC: Test Report", ["Version 1 test report", "More information"])
     document.add(section)
 
     section = DictSection("DataSet 1", dict1, 4)
     document.add(section)
 
-    section = DictSection("DataSet 2", dict2, 2)
+    section = StatCardSection("DataSet 2", dict3, 4)
     document.add(section)
 
     images = []
@@ -58,6 +66,8 @@ if __name__ == "__main__":
 
     section = GallerySection("Gallery", images, 12)
     document.add(section)
+
+    document.add_page_cap()
 
     section = DictSection("DataSet 3", dict2, 2)
     document.add(section)
