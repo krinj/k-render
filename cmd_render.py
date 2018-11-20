@@ -4,9 +4,13 @@
 """
 <Description>
 """
+import cv2
+import os
+
 from k_render import K_RENDER_MODE_IMAGE
 from k_render.dict_section import DictSection
 from k_render.document import Document
+from k_render.gallery_section import GallerySection
 from k_render.heading_section import HeadingSection
 
 __author__ = "Jakrin Juangbhanich"
@@ -44,6 +48,15 @@ if __name__ == "__main__":
     document.add(section)
 
     section = DictSection("DataSet 2", dict2, 2)
+    document.add(section)
+
+    images = []
+    image_files = os.listdir("gallery_images")
+    for image_file in image_files:
+        image = cv2.imread(f"gallery_images/{image_file}")
+        images.append(image)
+
+    section = GallerySection("Gallery", images, 12)
     document.add(section)
 
     section = DictSection("DataSet 3", dict2, 2)
